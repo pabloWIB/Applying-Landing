@@ -1,255 +1,129 @@
-[![288shots-so.png](https://i.postimg.cc/SNwRwNs9/288shots-so.png)](https://postimg.cc/HV9TMmbW)
-# Applying
+# Applyiing
 
-A minimalist, philosophy-driven website dedicated to the principle that "Knowledge without application is meaningless." This platform emphasizes the transformative power of applying knowledge to create real-world impact and meaningful contributions.
+A single-screen typographic piece built around one argument: knowledge only counts once it is applied.
 
-## Tech Stack
+## Description
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Styling**: Clean, minimalist CSS with focus on typography and readability
-- **Deployment**: Static hosting compatible
-- **Dependencies**: None (pure static implementation)
+One page, one statement, one link. There is no product to sell, no form to fill and no navigation to follow, so the whole design problem is typographic: set the argument so it reads, and give it a single graphic idea to sit in.
 
-## Philosophy & Purpose
+That graphic idea is a ring of seven hairline circles drawn entirely in CSS. Six of them drift inward toward a still centre over a fourteen-second cycle and drift back out, which is where the piece gets its only movement. There are no images in the project — the ring, the favicon and the arrow in the button are all vector marks generated in the source.
 
-The website embodies the core belief that true understanding comes through application. It serves as a platform to explore how knowledge transforms from theoretical understanding to practical wisdom through real-world implementation.
+The page ships **no JavaScript at all**. Layout, animation, focus handling, responsive behaviour and reduced-motion support are all CSS. Nothing is requested from a third-party origin: the two typefaces are served from this repository, and there is no analytics, no CDN and no tracking of any kind.
 
-**Core Message**: Simply knowing about something is not enough; it is necessary to apply that knowledge to truly understand it and see its value.
+## Tech stack
 
-## Features
+| Layer | Technology | Detail |
+|---|---|---|
+| Markup | HTML5 | Two static pages, `index.html` and `404.html` |
+| Styling | CSS3 | Custom properties, CSS Grid, `clamp()` fluid type, three files |
+| Display type | Cinzel | Variable font, weight axis 400–900, one file |
+| Script type | Dancing Script | Regular, used for the wordmark only |
+| Body type | System UI stack | No download; Cinzel has no true lowercase and is unfit for running text |
+| Scripting | None | The project contains no JavaScript files |
+| Build | None | No bundler, no preprocessor, no `package.json` |
 
-- **Minimalist Design**: Clean, distraction-free interface focusing on content and message
-- **Philosophy-Centered Content**: Thoughtful exploration of knowledge application principles
-- **Responsive Typography**: Optimized reading experience across all devices
-- **Multi-language Support**: Spanish language implementation with expansion capabilities
-- **Interactive Elements**: Subtle animations and transitions enhancing user engagement
-- **Call-to-Action Integration**: Strategic "APPLY" prompts encouraging user action
-- **Educational Content**: Resources about knowledge application and practical learning
+## Measurements
 
-## Project Structure
+Verified on a local HTTP server and by opening the files directly.
+
+| Metric | Value |
+|---|---|
+| First-load weight | 217 KB, of which 201 KB is the two fonts |
+| HTTP requests on first load | 7 — the page, three stylesheets, two fonts, one icon |
+| JavaScript shipped | 0 bytes |
+| Third-party requests | 0 |
+| Console errors and warnings | 0 on both pages |
+| Text contrast | 21:1 primary, 8.63:1 secondary |
+| Horizontal overflow | None at 360, 480, 768, 1024 or 1440 px |
+| Minimum touch target | 44 px on every standalone control |
+
+## Project structure
 
 ```
-applying/
-├── index.html              # Main landing page
-├── css/
-│   ├── styles.css         # Main stylesheet
-│   ├── typography.css     # Font and text styling
-│   ├── layout.css         # Page layout and structure
-│   └── responsive.css     # Mobile responsiveness
-├── js/
-│   ├── main.js           # Core functionality
-│   ├── animations.js     # Subtle UI animations
-│   ├── scroll-effects.js # Scroll-based interactions
-│   └── navigation.js     # Menu and navigation
-├── pages/
-│   ├── informacion.html  # Information page
-│   ├── sobre-nosotros.html # About us page
-│   ├── philosophy.html   # Philosophy deep-dive
-│   └── resources.html    # Application resources
-├── images/
-│   ├── backgrounds/      # Minimalist background images
-│   ├── icons/           # Simple, clean icons
-│   └── illustrations/   # Conceptual illustrations
-└── README.md
+.
+├── index.html                       # The piece: statement, argument, one link
+├── 404.html                         # Same shell, returns to the home page
+├── robots.txt                       # Allows everything, points at the sitemap
+├── sitemap.xml                      # One URL — the site is one page
+├── .gitignore
+├── assets/
+│   ├── css/
+│   │   ├── base.css                 # Custom properties, reset, typography, utilities
+│   │   ├── layout.css               # Page grid, header, hero, footer, media queries
+│   │   └── components.css           # The animated ring, buttons, links, 404 block
+│   ├── fonts/
+│   │   ├── cinzel-variable.ttf      # Display face, weight axis 400–900
+│   │   ├── dancing-script-regular.ttf   # Wordmark
+│   │   └── ofl.txt                  # SIL Open Font License, covers both families
+│   └── img/
+│       └── favicon.svg              # Hand-written SVG, 284 bytes
+└── docs/
+    ├── auditoria.md                 # Inventory and findings before the rewrite
+    └── cambios.md                   # What changed, grouped by phase
 ```
 
-## Quick Start
+## Running it locally
 
-### Local Development
+The project is static and has no dependencies, so opening the file works:
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/pabloWIB/Applying.git
-   cd Applying
-   ```
+```bash
+open index.html
+```
 
-2. **Open locally**
-   - Simply open `index.html` in your preferred web browser
-   - Or use a local server for enhanced development:
-   ```bash
-   # Using Node.js http-server
-   npx http-server . -p 3000
-   
-   # Using PHP built-in server
-   php -S localhost:3000
-   
-   # Using Python (if available)
-   python -m http.server 3000
-   ```
+To serve it over HTTP instead — which is how the fonts and the canonical URL behave in production:
 
-3. **Start developing**
-   - Edit HTML files for content updates
-   - Modify CSS for styling changes
-   - Update JavaScript for enhanced interactions
+```bash
+python -m http.server 8000
+```
 
-### Development Philosophy
+Then visit `http://localhost:8000`. Any static server does the same job; nothing needs to be installed or built first.
 
-When working on this project, maintain the core principle of meaningful application:
-- Every feature should serve the central message
-- Design choices should enhance, not distract from, the content
-- Code should be clean, purposeful, and well-documented
+## Customising the type
 
-## Deployment
+Both `@font-face` rules live at the top of `assets/css/base.css`. Cinzel is supplied as a variable font, so the whole 400–900 range comes from one file and one request:
 
-### Static Hosting Platforms
-
-**Netlify** (Recommended)
-1. Connect your GitHub repository
-2. Set build command: `# none required`
-3. Set publish directory: `./`
-4. Configure custom domain if desired
-5. Enable form handling for contact features
-
-**Vercel**
-1. Import project from GitHub
-2. Framework preset: Other
-3. Build and output settings: Default
-4. Deploy with automatic HTTPS
-
-**GitHub Pages**
-1. Repository Settings → Pages
-2. Source: Deploy from branch
-3. Branch: main, folder: / (root)
-4. Custom domain optional
-
-**Alternative Platforms**
-- Firebase Hosting
-- Surge.sh
-- Cloudflare Pages
-- AWS S3 + CloudFront
-
-## Customization
-
-### Content Philosophy
-
-**Core Message Adaptation**
-- Modify the central philosophy while maintaining the application-focused theme
-- Update quote and supporting text to reflect your specific message
-- Adapt the "APPLY" call-to-action to match your goals
-
-**Language Localization**
-- Currently supports Spanish ("Información", "Sobre Nosotros")
-- Add additional languages by creating corresponding HTML files
-- Implement language switcher for multi-lingual support
-
-### Design Customization
-
-**Typography-First Approach**
 ```css
-:root {
-  --primary-font: 'Your-Chosen-Font', serif;
-  --body-font: 'Secondary-Font', sans-serif;
-  --accent-color: #your-accent-color;
-  --text-color: #your-text-color;
-  --background-color: #your-bg-color;
+@font-face {
+  font-family: "Cinzel";
+  src: url("../fonts/cinzel-variable.ttf") format("truetype-variations");
+  font-weight: 400 900;
+  font-display: swap;
 }
 ```
 
-**Minimalist Aesthetics**
-- Focus on whitespace and clean lines
-- Maintain high contrast for readability
-- Use subtle animations and transitions
-- Prioritize content over decorative elements
-
-### Functionality Extensions
-
-**Enhanced Interactivity**
-- Add reading progress indicators
-- Implement smooth scrolling navigation
-- Include related content suggestions
-- Add sharing capabilities for key insights
-
-**Content Management**
-- Create blog section for application examples
-- Add case studies of knowledge application
-- Include user-submitted stories or examples
-- Develop resource library for practical learning
-
-## Content Strategy
-
-### Core Sections
-
-**Homepage**
-- Central philosophy statement
-- Compelling introduction to knowledge application
-- Clear navigation to supporting content
-
-**Información (Information)**
-- Detailed exploration of the philosophy
-- Practical examples and case studies
-- Resources for further learning
-
-**Sobre Nosotros (About Us)**
-- Mission and vision alignment with core philosophy
-- Team or individual background
-- Contact and engagement opportunities
-
-## Performance Optimization
-
-**Minimalist Performance**
-- Optimize for fast loading despite rich typography
-- Compress any images while maintaining quality
-- Minimize CSS and JavaScript for production
-- Implement efficient caching strategies
-
-**Reading Experience**
-- Optimize typography for various screen sizes
-- Ensure proper contrast ratios for accessibility
-- Implement smooth scrolling and transitions
-- Consider reading time estimates for longer content
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
+Colour, spacing, type scale and motion are all declared as custom properties in the `:root` block of the same file. Changing the palette or the spacing rhythm means editing that block and nothing else.
 
 ## Accessibility
 
-- Semantic HTML structure for screen readers
-- Proper heading hierarchy for navigation
-- High contrast ratios for visual accessibility
-- Keyboard navigation support
-- Alt text for any images or graphics
+- One `<h1>` per page and a heading order with no skipped levels.
+- A skip link as the first focusable element.
+- A visible focus ring on every interactive element, set globally through `:focus-visible`.
+- Contrast measured at 21:1 for primary text and 8.63:1 for secondary, against a 4.5:1 requirement.
+- Pinch zoom left enabled; the viewport meta sets no scale limits.
+- `prefers-reduced-motion` stops the ring animation.
+- Standalone controls are at least 44 px on their short edge.
 
-## Contributing
+## Fonts and licensing
 
-1. Fork the repository
-2. Create a philosophical feature branch (`git checkout -b feature/meaningful-addition`)
-3. Commit your thoughtful changes (`git commit -am 'Apply new insight'`)
-4. Push to the branch (`git push origin feature/meaningful-addition`)
-5. Create a Pull Request with clear reasoning
+Cinzel and Dancing Script are both licensed under the SIL Open Font License. `assets/fonts/ofl.txt` is the licence text as distributed and must travel with the font files if they are redistributed.
 
-### Contribution Guidelines
+## Deployment
 
-- Maintain the philosophical focus of the project
-- Ensure all additions serve the central message
-- Keep code clean and well-commented
-- Test thoroughly across devices and browsers
-- Consider the impact and application of any changes
+Deployed as a static site at [applyiing.wib.digital](https://applyiing.wib.digital). There is no build step: upload the repository root as-is, with no build command and no output directory. Point the host's 404 handler at `404.html`.
 
-## Future Enhancements
+If the site is served from a different domain, three values need updating: the `<link rel="canonical">` and `og:url` tags in `index.html`, and the `Sitemap:` line in `robots.txt` together with the `<loc>` in `sitemap.xml`.
 
-**Educational Expansion**
-- Interactive learning modules
-- Progress tracking for applied knowledge
-- Community sharing platform
-- Mentorship connection features
+## Author
 
-**Content Development**
-- Regular philosophy articles
-- Guest contributor system
-- Application challenge programs
-- Success story showcases
+**Pablo Nieto Pérez** — [wib.digital](https://wib.digital)
+GitHub: [@pabloWIB](https://github.com/pabloWIB)
 
-## License
+## Hire me
 
-This project is available under the MIT License, encouraging others to apply and build upon these ideas in meaningful ways.
+I build **custom internal tools, CRMs and dashboards** for small teams, and
+**conversion-focused websites** for businesses.
 
----
-
-*"Knowledge without application is meaningless."* - Apply what you learn, contribute meaningfully, and transform understanding into wisdom through action.
-
-For questions or philosophical discussions about this project, please engage through the website's contact methods or contribute to the ongoing conversation through issues and pull requests.
+- [Custom internal tool, CRM or dashboard](https://www.fiverr.com/pablonietop/build-a-custom-internal-app-for-your-business) — from $45
+- [Conversion-focused website](https://www.fiverr.com/pablonietop/convert-your-landing-page-design-to-code) — from $80
+- [All my services on Fiverr](https://www.fiverr.com/pablonietop)
+- [wib.digital](https://wib.digital)

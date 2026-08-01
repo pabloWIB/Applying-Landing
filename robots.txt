@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://applyiing.wib.digital/sitemap.xml

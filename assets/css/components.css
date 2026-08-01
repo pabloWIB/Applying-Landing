@@ -1,0 +1,151 @@
+/* ==========================================================================
+   components.css — anillo animado, botones, bloque 404
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Anillo — la pieza gráfica del sitio.
+   Siete círculos de trazo fino: seis en corona más uno en el centro.
+   Los seis exteriores convergen hacia el centro y vuelven, en un ciclo
+   de 14 s heredado del diseño original.
+   -------------------------------------------------------------------------- */
+
+.orbit {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+
+  --orbit-size: min(112vmin, 54rem, 94vw);
+  --orbit-radius: calc(var(--orbit-size) * 0.3);
+  --orbit-circle: calc(var(--orbit-size) * 0.34);
+  --orbit-drift: calc(var(--orbit-size) * 0.05);
+}
+
+.orbit__ring {
+  position: relative;
+  width: var(--orbit-size);
+  height: var(--orbit-size);
+}
+
+.orbit__circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--orbit-circle);
+  height: var(--orbit-circle);
+  margin-block-start: calc(var(--orbit-circle) / -2);
+  margin-inline-start: calc(var(--orbit-circle) / -2);
+  border: var(--border-hairline) solid var(--color-line);
+  border-radius: var(--radius-round);
+  transform: rotate(var(--angle, 0deg)) translateY(calc(var(--orbit-radius) * -1));
+  animation: orbit-breathe var(--orbit-duration) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+
+/* Los seis exteriores se reparten la corona; el desfase escalona la respiración */
+.orbit__circle:nth-child(1) { --angle: 0deg;   --delay: 0s; }
+.orbit__circle:nth-child(2) { --angle: 60deg;  --delay: -1.2s; }
+.orbit__circle:nth-child(3) { --angle: 120deg; --delay: -2.4s; }
+.orbit__circle:nth-child(4) { --angle: 180deg; --delay: -3.6s; }
+.orbit__circle:nth-child(5) { --angle: 240deg; --delay: -4.8s; }
+.orbit__circle:nth-child(6) { --angle: 300deg; --delay: -6s; }
+
+/* El círculo central no se desplaza: es el punto al que convergen los demás */
+.orbit__circle--core {
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.26);
+  animation: none;
+}
+
+@keyframes orbit-breathe {
+  50% {
+    transform: rotate(var(--angle, 0deg))
+      translateY(calc((var(--orbit-radius) - var(--orbit-drift)) * -1));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Botones y enlaces de acción
+   -------------------------------------------------------------------------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 11rem;
+  min-height: 2.75rem;          /* 44px — área táctil mínima */
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-fg);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.button:hover {
+  background-color: var(--color-fg);
+  border-color: var(--color-fg);
+  color: var(--color-bg);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button__arrow {
+  width: 0.75em;
+  height: 0.75em;
+  transition: transform var(--transition-base);
+}
+
+.button:hover .button__arrow {
+  transform: translateX(0.2em);
+}
+
+/* --------------------------------------------------------------------------
+   Enlace de texto
+   -------------------------------------------------------------------------- */
+
+.link {
+  border-block-end: 1px solid var(--color-line);
+  padding-block-end: 1px;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.link:hover {
+  border-block-end-color: var(--color-fg);
+  color: var(--color-fg);
+}
+
+/* --------------------------------------------------------------------------
+   Página 404
+   -------------------------------------------------------------------------- */
+
+.error__code {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+  line-height: 1;
+}
+
+.error__message {
+  margin-block-start: var(--space-4);
+  color: var(--color-muted);
+  font-size: var(--text-lg);
+}
